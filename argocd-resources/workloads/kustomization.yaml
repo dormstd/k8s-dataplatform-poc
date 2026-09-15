@@ -5,4 +5,5 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-  #- deployed-applications
+  - spark-connect.yaml
+  - trino.yaml
