@@ -8,6 +8,8 @@ helmCharts:
     releaseName: trino
     namespace: trino
     # File to override default values file (Optional)
+    additionalConfigProperties:
+      - http-server.process-forwarded=true
     #additionalValuesFiles:
     #  - base/values.yaml
 
