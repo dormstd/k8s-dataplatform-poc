@@ -10,3 +10,6 @@ helmCharts:
     # File to override default values file (Optional)
     #additionalValuesFiles:
     #  - base/values.yaml
+
+resources:
+  - configuration
