@@ -79,7 +79,7 @@ spec:
         namespace: argocd
       project: default
       source:
-        path: manifests/platform-infra
+        path: argocd-resources/platform-infra
         repoURL: https://github.com/dormstd/k8s-dataplatform-poc.git
         targetRevision: HEAD
       syncPolicy:
