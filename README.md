@@ -6,4 +6,4 @@ Instructions:
 `kind create cluster --config kind-config/cluster.yaml`
 
 2. Deploy the boorstrap argoCD:
-`k apply -f bootstrap/argocd/bootstrap.yaml`
+`k apply -f bootstrap/argocd-bootstrap.yaml`

@@ -1,0 +1,45 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+
+# Añadimos los parches para que ArgoCD gestione correctamente los Jobs
+patches:
+  - patch: |
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: ingress-nginx-admission-create
+        annotations:
+          argocd.argoproj.io/hook: PreSync
+          argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    target:
+      kind: Job
+      name: ingress-nginx-admission-create
+
+  - patch: |
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        name: ingress-nginx-admission-patch
+        annotations:
+          argocd.argoproj.io/hook: PostSync
+          argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    target:
+      kind: Job
+      name: ingress-nginx-admission-patch
+  # ARREGLO CORRECTO DEL SERVICIO:
+  # Eliminamos la mutación del 'status' para evitar el OutOfSync.
+  # En su lugar, nos aseguramos de que se aplique como un NodePort limpio de Kubernetes.
+  - patch: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: ingress-nginx-controller
+      spec:
+        type: NodePort
+    target:
+      kind: Service
+      name: ingress-nginx-controller

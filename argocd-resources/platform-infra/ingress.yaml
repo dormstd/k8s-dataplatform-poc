@@ -21,8 +21,8 @@ spec:
         namespace: ingress-nginx
       project: default
       source:
-        path: cluster-resources/ingress-nginx
-        repoURL: https://github.com/dormstd/k8s-homelab.git
+        path: manifests/platform-infra/ingress-nginx
+        repoURL: https://github.com/dormstd/k8s-dataplatform-poc.git
         targetRevision: HEAD
       syncPolicy:
         automated:
