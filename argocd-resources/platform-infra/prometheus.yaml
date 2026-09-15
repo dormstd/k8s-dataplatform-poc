@@ -21,8 +21,8 @@ spec:
         namespace: prometheus-system
       project: default
       source:
-        path: cluster-resources/prometheus-operator
-        repoURL: https://github.com/dormstd/k8s-homelab.git
+        path: manifests/platform-infra/prometheus-operator
+        repoURL: https://github.com/dormstd/k8s-dataplatform-poc.git
         targetRevision: HEAD
       syncPolicy:
         automated:
