@@ -3,14 +3,9 @@ kind: Service
 metadata:
   name: polaris-service
 spec:
+  ports:
+  - port: 8181
+    targetPort: 8181
   selector:
     app: polaris
-  ports:
-  - name: api
-    protocol: TCP
-    port: 8181
-    targetPort: 8181
-  - name: ui
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+    

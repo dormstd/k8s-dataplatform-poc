@@ -20,11 +20,3 @@ spec:
         env:
         - name: POLARIS_BOOTSTRAP_ROOT_CREDENTIALS
           value: "true"
-      - name: polaris-ui
-        image: georgelza/polaris-console:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: POLARIS_API_URL
-          value: "http://localhost:8181" # Apunta al backend en el mismo pod
----
