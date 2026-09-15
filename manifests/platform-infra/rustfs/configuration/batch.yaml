@@ -1,4 +1,4 @@
-# Job de inicialización de buckets usando mc
+# Job de inicialización de buckets usando Alpine y mc
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -8,10 +8,21 @@ spec:
     spec:
       containers:
       - name: mc
-        image: minio/mc:latest
+        image: alpine:latest
         command: ["/bin/sh", "-c"]
         args:
         - |
+          # Instalar dependencias necesarias (curl para descargar mc)
+          apk add --no-cache curl;
+          
+          # Descargar el binario oficial de MinIO Client y darle permisos de ejecución
+          curl -sO https://min.io;
+          chmod +x mc;
+          
+          # Moverlo al PATH para poder usarlo directamente
+          mv mc /usr/local/bin/;
+          
+          # Ejecutar la lógica original de tu script
           until mc alias set local http://rustfs:9000 admin password123; do sleep 2; done;
           mc mb --ignore-existing local/sales-bucket;
           mc mb --ignore-existing local/stock-bucket;
