@@ -88,3 +88,33 @@ spec:
         automated:
           selfHeal: true
           prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd-workloads
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: in-cluster
+  template:
+    metadata:
+      name: argocd-workloads
+    spec:
+      destination:
+        name: "{{cluster}}"
+        namespace: argocd
+      project: default
+      source:
+        path: argocd-resources/workloads
+        repoURL: https://github.com/dormstd/k8s-dataplatform-poc.git
+        targetRevision: HEAD
+      syncPolicy:
+        syncOptions:
+          - ServerSideApply=true
+        automated:
+          selfHeal: true
+          prune: true
