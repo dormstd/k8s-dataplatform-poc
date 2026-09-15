@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: polaris-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+#    cert-manager.io/cluster-issuer: "cloudflare-issuer"
+#    acme.cert-manager.io/dns01-provider: cloudflare
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: polaris-service
+                port:
+                  number: 8181
+      host: polaris.127-0-0-1.nip.io

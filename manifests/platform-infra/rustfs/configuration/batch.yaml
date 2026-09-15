@@ -1,0 +1,19 @@
+# Job de inicialización de buckets usando mc
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-rustfs-buckets
+spec:
+  template:
+    spec:
+      containers:
+      - name: mc
+        image: minio/mc:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          until mc alias set local http://rustfs:9000 admin password123; do sleep 2; done;
+          mc mb --ignore-existing local/sales-bucket;
+          mc mb --ignore-existing local/stock-bucket;
+          mc mb --ignore-existing local/purchase-bucket;
+      restartPolicy: OnFailure

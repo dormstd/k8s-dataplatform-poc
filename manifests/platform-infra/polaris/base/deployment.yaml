@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: polaris
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: polaris
+  template:
+    metadata:
+      labels:
+        app: polaris
+    spec:
+      containers:
+      - name: polaris
+        image: apache/polaris:latest
+        ports:
+        - containerPort: 8181
+        env:
+        - name: POLARIS_BOOTSTRAP_ROOT_CREDENTIALS
+          value: "true"
