@@ -62,7 +62,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: argocd-applications
+  name: argocd-platform-infra
   annotations:
     argocd.argoproj.io/sync-wave: "20"
 spec:
@@ -72,14 +72,14 @@ spec:
           - cluster: in-cluster
   template:
     metadata:
-      name: argocd-applications
+      name: argocd-platform-infra
     spec:
       destination:
         name: "{{cluster}}"
         namespace: argocd
       project: default
       source:
-        path: argocd-resources/applications
+        path: argocd-resources/platform-infra
         repoURL: https://github.com/dormstd/k8s-dataplatform-poc.git
         targetRevision: HEAD
       syncPolicy:
