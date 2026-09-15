@@ -11,5 +11,5 @@ Instructions:
 3. Run:
 `k kustomize argocd | k apply --server-side --force-conflicts -f -`
 
-4. Deploy the bootstrap argoCD:
-`k apply -f bootstrap/argocd-bootstrap.yaml`
+4. Deploy the applications to argoCD:
+`k kustomize argocd-resources/platform-infra | k apply -f -`
