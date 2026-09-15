@@ -18,7 +18,7 @@ spec:
     spec:
       destination:
         name: "{{cluster}}"
-        namespace: rustfs
+        namespace: rustfs-system
       project: default
       source:
         path: manifests/platform-infra/rustfs
