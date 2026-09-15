@@ -1,4 +1,4 @@
-# Job de inicialización de buckets usando Alpine y mc
+# Job de inicialización de buckets usando Alpine y mc corregido
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -12,19 +12,29 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - |
-          # Instalar dependencias necesarias (curl para descargar mc)
-          apk add --no-cache curl;
+          # Detener el script si ocurre algún error intermedio
+          set -e
           
-          # Descargar el binario oficial de MinIO Client y darle permisos de ejecución
-          curl -sO https://min.io;
-          chmod +x mc;
+          # Instalar curl de forma silenciosa
+          apk add --no-cache curl
           
-          # Moverlo al PATH para poder usarlo directamente
-          mv mc /usr/local/bin/;
+          # Descargar el binario forzando explícitamente el nombre de salida 'mc'
+          curl -sL -o mc https://dl.min.io/client/mc/release/linux-amd64/mc
           
-          # Ejecutar la lógica original de tu script
-          until mc alias set local http://rustfs:9000 admin password123; do sleep 2; done;
-          mc mb --ignore-existing local/sales-bucket;
-          mc mb --ignore-existing local/stock-bucket;
-          mc mb --ignore-existing local/purchase-bucket;
+          # Dar permisos y mover al PATH del sistema
+          chmod +x mc
+          mv mc /usr/local/bin/
+          
+          # Desactivar 'set -e' temporalmente para permitir que el bucle 'until' falle y reintente libremente
+          set +e
+          
+          # Lógica de inicialización original
+          until mc alias set local http://rustfs:9000 admin password123; do 
+            echo "Esperando a que MinIO esté listo..."
+            sleep 2
+          done
+          
+          mc mb --ignore-existing local/sales-bucket
+          mc mb --ignore-existing local/stock-bucket
+          mc mb --ignore-existing local/purchase-bucket
       restartPolicy: OnFailure
