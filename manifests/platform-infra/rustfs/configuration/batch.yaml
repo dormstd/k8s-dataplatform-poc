@@ -7,33 +7,15 @@ spec:
     spec:
       containers:
       - name: mc
-        image: alpine:latest
+        image: bitnamilegacy/minio:latest
         command: ["/bin/sh", "-c"]
         args:
         - |
-          # Detener el script si ocurre algún error intermedio
-          set -e
-          
-          # Instalar curl de forma silenciosa
-          apk add --no-cache curl
-          
-          # Descargar el binario forzando explícitamente el nombre de salida 'mc'
-          curl -sL -o mc https://dl.min.io/client/mc/release/linux-amd64/mc
-          
-          # Dar permisos y mover al PATH del sistema
-          chmod +x mc
-          mv mc /usr/local/bin/
-          
-          # Desactivar 'set -e' temporalmente para permitir que el bucle 'until' falle y reintente libremente
-          set +e
-          
-          # Lógica de inicialización original
           until mc alias set local http://rustfs:9000 admin password123; do 
-            echo "Esperando a que MinIO esté listo..."
+            echo "Esperando a que el servicio rustfs esté listo..."
             sleep 2
-          done
-          
-          mc mb --ignore-existing local/sales-bucket
-          mc mb --ignore-existing local/stock-bucket
-          mc mb --ignore-existing local/purchase-bucket
+          done;
+          mc mb --ignore-existing local/sales-bucket;
+          mc mb --ignore-existing local/stock-bucket;
+          mc mb --ignore-existing local/purchase-bucket;
       restartPolicy: OnFailure
