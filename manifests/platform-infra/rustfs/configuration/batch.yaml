@@ -1,4 +1,3 @@
-# Job de inicialización de buckets usando Alpine y mc corregido
 apiVersion: batch/v1
 kind: Job
 metadata:
