@@ -19,5 +19,15 @@ spec:
               service:
                 name: polaris-service
                 port:
+                  number: 3000
+      host: polaris-ui.127-0-0-1.nip.io
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: polaris-service
+                port:
                   number: 8181
-      host: polaris.127-0-0-1.nip.io
+      host: polaris-api.127-0-0-1.nip.io
