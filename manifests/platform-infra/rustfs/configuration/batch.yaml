@@ -11,7 +11,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - |
-          until mc alias set local http://rustfs:9000 admin password123; do 
+          until mc alias set local http://rustfs-service:9000 admin password123; do 
             echo "Esperando a que el servicio rustfs esté listo..."
             sleep 2
           done;
