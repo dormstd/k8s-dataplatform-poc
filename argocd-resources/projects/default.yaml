@@ -11,4 +11,4 @@ spec:
   - namespace: '*'
     server: '*'
   sourceRepos:
-  - https://github.com/dormstd/k8s-homelab.git
+  - https://github.com/dormstd/k8s-dataplatform-poc.git
