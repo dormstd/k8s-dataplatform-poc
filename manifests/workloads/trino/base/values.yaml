@@ -1,5 +1,26 @@
 server:
-  workers: 1 # El número de workers que desees
+  workers: 0 # Modo single node para laptop
 
 additionalConfigProperties:
   - http-server.process-forwarded=true
+
+additionalCatalogs:
+  polaris: |
+    connector.name=iceberg
+    iceberg.catalog.type=rest
+    iceberg.rest-catalog.uri=http://polaris.polaris-system.svc.cluster.local:8181/api/catalog
+    iceberg.rest-catalog.security.auth.type=NONE
+    fs.native-s3.enabled=true
+    s3.endpoint=http://minio.minio-system.svc.cluster.local:9000
+    s3.path-style-access=true
+    s3.region=us-east-1
+    s3.aws-access-key=admin
+    s3.aws-secret-key=password123
+
+resources:
+  limits:
+    memory: 2Gi
+    cpu: 1
+  requests:
+    memory: 1Gi
+    cpu: 0.5
