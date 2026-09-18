@@ -9,7 +9,6 @@ additionalCatalogs:
     connector.name=iceberg
     iceberg.catalog.type=rest
     iceberg.rest-catalog.uri=http://polaris.polaris-system.svc.cluster.local:8181/api/catalog
-    iceberg.rest-catalog.security.auth.type=NONE
     fs.native-s3.enabled=true
     s3.endpoint=http://minio.minio-system.svc.cluster.local:9000
     s3.path-style-access=true
